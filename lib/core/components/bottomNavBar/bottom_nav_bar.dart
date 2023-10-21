@@ -24,7 +24,7 @@ class AppBottomNavBar {
           child: Padding(
             padding: const EdgeInsets.all(0.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: onTapHome,
@@ -46,6 +46,7 @@ class AppBottomNavBar {
                     ],
                   )),
                 ),
+               const SizedBox(width: 180,),
                 // Visibility(
                 //   visible: false,
                 //   child: InkWell(
@@ -70,26 +71,26 @@ class AppBottomNavBar {
                 //     )),
                 //   ),
                 // ),
-                InkWell(
-                  onTap: onTapRanking,
-                  child: SizedBox(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AppGradientIcon(
-                          FontAwesomeIcons.rankingStar, 21, selected == 2, 23),
-                      const SizedBox(
-                        height: 3,
-                      ),
-                      AppText.textPrimary(
-                          text: ' RANKING',
-                          fontSize: 11,
-                          color: selected == 2 ? AppThemes.i4 : AppThemes.dark,
-                          textAlign: TextAlign.center)
-                    ],
-                  )),
-                ),
+                // InkWell(
+                //   onTap: onTapRanking,
+                //   child: SizedBox(
+                //       child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       AppGradientIcon(
+                //           FontAwesomeIcons.rankingStar, 21, selected == 2, 23),
+                //       const SizedBox(
+                //         height: 3,
+                //       ),
+                //       AppText.textPrimary(
+                //           text: ' RANKING',
+                //           fontSize: 11,
+                //           color: selected == 2 ? AppThemes.i4 : AppThemes.dark,
+                //           textAlign: TextAlign.center)
+                //     ],
+                //   )),
+                // ),
                 InkWell(
                   onTap: onTapConta,
                   child: SizedBox(

@@ -1,10 +1,14 @@
+import 'package:app_votacao/context/votacao/model/participante_model.dart';
 import 'package:app_votacao/core/components/icon/gradient_icon.dart';
 import 'package:app_votacao/core/components/text/text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ParticipantePage extends StatelessWidget {
-  const ParticipantePage({super.key});
+
+  final ParticipanteEliminationModel model;
+
+  const ParticipantePage({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +17,17 @@ class ParticipantePage extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(
-                height: 200,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/imgs/homem3.png'))),
+              Padding(
+                padding: const EdgeInsets.only(top: 33),
+                child: Container(
+                  height: 200,
+                  width: 180,
+                  decoration:  BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                          image: AssetImage(model.img), fit: BoxFit.fill)),
+                ),
               ),
               SizedBox(
                 height: 200,
@@ -32,7 +42,7 @@ class ParticipantePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AppText.textSecundary(text: 'Nome: '),
-                          AppText.textPrimary(text: 'Mario Roberto'),
+                          AppText.textPrimary(text: model.name),
                         ],
                       ),
                       const SizedBox(
@@ -43,7 +53,7 @@ class ParticipantePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AppText.textSecundary(text: 'Idade: '),
-                          AppText.textPrimary(text: '21'),
+                          AppText.textPrimary(text: '...'),
                         ],
                       ),
                       const SizedBox(
@@ -54,7 +64,7 @@ class ParticipantePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AppText.textSecundary(text: 'Cidade: '),
-                          AppText.textPrimary(text: 'Brasília - DF'),
+                          AppText.textPrimary(text: '...'),
                         ],
                       ),
                       const SizedBox(

@@ -8,6 +8,8 @@ class MainController extends GetxController {
   static MainController to = Get.find();
 
 
+  int userVotes = 3;
+
 
   ///Utilizada para saber se o usuário está logado
   bool isLoggedin = false;

@@ -1,5 +1,7 @@
+import 'package:app_votacao/context/home/controller/home_controller.dart';
 import 'package:app_votacao/context/votacao/model/participante_model.dart';
 import 'package:app_votacao/core/components/alerts/alerts.dart';
+import 'package:app_votacao/core/controller/main_controller.dart';
 import 'package:app_votacao/core/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,35 +11,75 @@ import 'package:get/get.dart';
 class VotacaoController extends GetxController {
   int selected = 100;
 
-  int votesUser = 1;
 
-  List<ParticipanteEliminationModel> participantes = [
+
+  List<ParticipanteEliminationModel> participantes = [];
+
+  List<ParticipanteEliminationModel> participantesForSort = [
     ParticipanteEliminationModel(
-        id: 1, name: 'Mario', votes: 200, img: "assets/imgs/homem3.png"),
+        id: 1,
+        name: 'Amanda',
+        img: 'assets/imgs/amanda.jpeg',
+        votes: 123,
+        eliminated: false),
     ParticipanteEliminationModel(
-        id: 2, name: 'Laura', votes: 123, img: "assets/imgs/mulher1.png"),
+        id: 2,
+        name: 'Ayarla',
+        img: 'assets/imgs/ayarla.jpeg',
+        votes: 231,
+        eliminated: false),
     ParticipanteEliminationModel(
-      id: 3,
-      name: 'João',
-      votes: 3211,
-      img: "assets/imgs/homem.png",
-    ),
+        id: 3,
+        name: 'Debochada',
+        img: 'assets/imgs/debochada.jpeg',
+        votes: 324,
+        eliminated: false),
     ParticipanteEliminationModel(
-        id: 4, name: 'Clara', votes: 324, img: "assets/imgs/homem2.png"),
+        id: 4,
+        name: 'Disbocuda',
+        img: 'assets/imgs/disbocuda.jpeg',
+        votes: 345,
+        eliminated: false),
     ParticipanteEliminationModel(
-        id: 5, name: 'Gertrudes', votes: 567, img: "assets/imgs/homem3.png"),
+        id: 5,
+        name: 'Emily',
+        img: 'assets/imgs/emily.jpeg',
+        votes: 456,
+        eliminated: false),
     ParticipanteEliminationModel(
-        id: 6, name: 'Mariana', votes: 454, img: "assets/imgs/mulher1.png"),
+        id: 6,
+        name: 'Gaga',
+        img: 'assets/imgs/gaga.jpeg',
+        votes: 533,
+        eliminated: false),
     ParticipanteEliminationModel(
-        id: 7, name: 'Clara', votes: 986, img: "assets/imgs/mulher1.png"),
+        id: 7,
+        name: 'Gracielly',
+        img: 'assets/imgs/gracielly.jpeg',
+        votes: 212,
+        eliminated: false),
+    ParticipanteEliminationModel(
+        id: 8,
+        name: 'PyongLe',
+        img: 'assets/imgs/pyongle.jpeg',
+        votes: 111,
+        eliminated: false),
+    ParticipanteEliminationModel(
+        id: 9,
+        name: 'Richelly',
+        img: 'assets/imgs/richelly.jpeg',
+        votes: 2345,
+        eliminated: false),
   ];
 
   bool isLoading = true;
 
-  confirmSendVote(ParticipanteEliminationModel model, BuildContext context) {
-    if (votesUser == 0) {
+  confirmSendVote(
+      ParticipanteEliminationModel model, BuildContext context, ) {
+    if (Get.find<MainController>().userVotes == 0) {
       AppAlertsDialog.alertWithButtons(
           textBtnOk: 'COMPRAR MAIS VOTOS',
+          // ignore: deprecated_member_use
           icon: FontAwesomeIcons.sadCry,
           title: 'Ops...',
           description: 'Que pena, parece que seus votos acabaram.',
@@ -54,7 +96,10 @@ class VotacaoController extends GetxController {
           name: model.name,
           onTapOk: () {
             Get.close(0);
-            sendVote(context);
+            sendVote(context, selected);
+            Get.find<MainController>().userVotes = Get.find<MainController>().userVotes - 1;
+            Get.find<HomeController>().update();
+            update();
           },
           onTapClose: () {
             Get.close(0);
@@ -63,13 +108,17 @@ class VotacaoController extends GetxController {
     }
   }
 
-  sendVote(
-    BuildContext context,
-  ) async {
+  sendVote(BuildContext context, int index) async {
     isLoading = true;
     update();
     AppAlertsDialog.alertLoading(text: 'Registrando voto...', context: context);
+    print(participantes[index].votes);
+    participantes[index].votes = participantes[index].votes + 1;
+    update();
+
+    print(participantes[index].votes);
     await Future.delayed(const Duration(seconds: 1), () async {
+      
       Get.close(0);
       AppAlertsDialog.alertMenssagemStatus(
           text: 'Voto registrado com sucesso!!',
@@ -92,7 +141,9 @@ class VotacaoController extends GetxController {
 
   @override
   void onInit() {
-    participantes.sort((a, b) => b.votes.compareTo(a.votes));
+    participantesForSort.sort((a, b) => b.votes.compareTo(a.votes));
+
+    participantes = participantesForSort;
 
     isLoading = false;
     update();

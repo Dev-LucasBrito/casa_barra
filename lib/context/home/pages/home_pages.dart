@@ -1,11 +1,13 @@
 import 'package:app_votacao/context/home/controller/home_controller.dart';
 import 'package:app_votacao/context/participante/page/participante_page.dart';
+import 'package:app_votacao/context/votacao/model/participante_model.dart';
 import 'package:app_votacao/core/components/alerts/alerts.dart';
 import 'package:app_votacao/core/components/bottomNavBar/bottom_nav_bar.dart';
 import 'package:app_votacao/core/components/buttons/buttons.dart';
 import 'package:app_votacao/core/components/cards/cards.dart';
 import 'package:app_votacao/core/components/loading/loading.dart';
 import 'package:app_votacao/core/components/text/text.dart';
+import 'package:app_votacao/core/controller/main_controller.dart';
 import 'package:app_votacao/core/themes/app_themes.dart';
 import 'package:app_votacao/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ class HomePage extends StatelessWidget {
                                       AppText.textSecundary(
                                           text: 'VOTOS', fontSize: 12),
                                       AppText.textPrimary(
-                                          text: '10', fontSize: 18),
+                                          text: Get.find<MainController>().userVotes.toString(), fontSize: 18),
                                     ],
                                   )
                                 ],
@@ -61,30 +63,26 @@ class HomePage extends StatelessWidget {
                               ),
                               SizedBox(
                                 height: 250,
-                                child: ListView(
+                                child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  children: [
-                                    InkWell(
+                                  itemCount: controller.participantes.length,
+                                  itemBuilder: (BuildContext context, int index) { 
+                                    ParticipanteEliminationModel model = controller.participantes[index];
+                                    return   InkWell(
                                       onTap: () {
                                         AppAlertsDialog.alertOutWidget(
                                             context: context,
                                             barrieDismissible: true,
-                                            widget: const ParticipantePage());
+                                            maxHeight: 450,
+                                            widget:  ParticipantePage(model: model,));
                                       },
                                       child: AppCards.images(
-                                          'assets/imgs/homem3.png',
-                                          'Mario',
-                                          false),
-                                    ),
-                                    AppCards.images('assets/imgs/mulher2.png',
-                                        'Laura', false),
-                                    AppCards.images('assets/imgs/homem2.png',
-                                        'João', false),
-                                    AppCards.images('assets/imgs/mulher1.png',
-                                        'Clara', false),
-                                    AppCards.images('assets/imgs/homem.png',
-                                        'Ricardo', true),
-                                  ],
+                                          model.img,
+                                          model.name,
+                                          model.eliminated),
+                                    );
+                                   },
+                                  
                                 ),
                               ),
                               const SizedBox(
@@ -204,6 +202,7 @@ class HomePage extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: () {
+                                  controller.openPopup(context);
                                   AppAlertsDialog.alertOutWidget(
                                       context: context,
                                       maxHeight:
@@ -219,13 +218,7 @@ class HomePage extends StatelessWidget {
                                               child: VideoPlayer(controller
                                                   .videoPlayerController),
                                             ),
-                                            ElevatedButton(
-                                              onPressed:
-                                                  controller.playPauseVideo,
-                                              child: Text(controller.isPlaying
-                                                  ? 'Pause'
-                                                  : 'Play'),
-                                            ),
+                                           
                                           ],
                                         ),
                                       ));

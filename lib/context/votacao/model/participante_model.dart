@@ -7,12 +7,14 @@ class ParticipanteEliminationModel {
   String name;
   String img;
   int votes;
+  bool eliminated;
 
   ParticipanteEliminationModel({
     required this.id,
     required this.name,
     required this.img,
     required this.votes,
+    required this.eliminated,
   });
   
 
@@ -21,12 +23,14 @@ class ParticipanteEliminationModel {
     String? name,
     String? img,
     int? votes,
+    bool? eliminated,
   }) {
     return ParticipanteEliminationModel(
       id: id ?? this.id,
       name: name ?? this.name,
       img: img ?? this.img,
       votes: votes ?? this.votes,
+      eliminated: eliminated ?? this.eliminated,
     );
   }
 
@@ -36,6 +40,7 @@ class ParticipanteEliminationModel {
       'name': name,
       'img': img,
       'votes': votes,
+      'eliminated': eliminated,
     };
   }
 
@@ -45,6 +50,7 @@ class ParticipanteEliminationModel {
       name: map['name'] as String,
       img: map['img'] as String,
       votes: map['votes'] as int,
+      eliminated: map['eliminated'] as bool,
     );
   }
 
@@ -54,7 +60,7 @@ class ParticipanteEliminationModel {
 
   @override
   String toString() {
-    return 'ParticipanteEliminationModel(id: $id, name: $name, img: $img, votes: $votes)';
+    return 'ParticipanteEliminationModel(id: $id, name: $name, img: $img, votes: $votes, eliminated: $eliminated)';
   }
 
   @override
@@ -65,6 +71,7 @@ class ParticipanteEliminationModel {
       other.id == id &&
       other.name == name &&
       other.img == img &&
+      other.eliminated == eliminated &&
       other.votes == votes;
   }
 
@@ -73,6 +80,7 @@ class ParticipanteEliminationModel {
     return id.hashCode ^
       name.hashCode ^
       img.hashCode ^
+      eliminated.hashCode ^
       votes.hashCode;
   }
 }

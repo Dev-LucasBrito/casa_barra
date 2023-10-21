@@ -11,7 +11,7 @@ class AppCards {
           Opacity(
             opacity: eliminated ? 0.5 : 1,
             child: Container(
-              width: 90,
+              width: 110,
               height: 230,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(9),
@@ -20,7 +20,7 @@ class AppCards {
             ),
           ),
           Container(
-            width: 90,
+            width: 110,
             height: 250,
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
@@ -75,8 +75,10 @@ class AppCards {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          height: 60,
-          width: 60,
+          height: position == 1
+              ? 80 : 60,
+          width: position == 1
+              ? 80 :60,
           decoration: BoxDecoration(
               border: Border.all(
                   color: selected ? AppThemes.primary : AppThemes.greyRegular,
@@ -86,7 +88,7 @@ class AppCards {
                 BoxShadow(
                     offset: Offset(0, -1),
                     color: AppThemes.greyRegular,
-                    blurRadius: 10,
+                    blurRadius: 40,
                     spreadRadius: 0.1)
               ],
               image:
